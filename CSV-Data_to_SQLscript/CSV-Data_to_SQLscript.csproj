@@ -7,4 +7,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ScriptGenerator\ScriptGenerator.csproj" />
+  </ItemGroup>
+
 </Project>

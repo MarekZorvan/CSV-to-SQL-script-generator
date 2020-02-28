@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSV_Data_to_SQLscript"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="CSV to SQL script generator" Height="172" Width="534" ResizeMode="NoResize">
+    <Grid Background="#FF25272C" Height="162">
+        <Button x:Name="CreateScriptButton" Content="Create SQL script" HorizontalAlignment="Left" Margin="10,94,0,41" Width="132" Background="#FFABD4F5" Click="CreateScriptButton_Click"/>
+        <Label x:Name="PathLabel" Content="File path" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Width="459"/>
+        <Button x:Name="SelectPathButton" Content="..." Margin="469,10,10,126" Click="SelectPathButton_Click"/>
 
     </Grid>
 </Window>
