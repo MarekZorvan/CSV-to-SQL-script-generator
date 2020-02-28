@@ -13,7 +13,7 @@ namespace ScriptGenerator
 
         }
 
-        public string MakeScript(string filePath)
+        public string MakeScript(string filePath, string tableName)
         {
             string script = "";
 
@@ -29,39 +29,34 @@ namespace ScriptGenerator
                     var reader = new StreamReader(file);
 
                     var parser = new CsvParser(reader);
+                    //parser.Configuration.Delimiter = ",";
 
                     // save headers
                     firstRowValues = parser.Read();
 
-                    string commandStart = "INSERT INTO table(";
+                    string commandStart = "INSERT INTO " + tableName + "(";
 
                     for (int i = 0; i < firstRowValues.Length - 1; i++)
                     {
                         commandStart += firstRowValues[i] + ", ";
                     }
 
-                    commandStart += firstRowValues[firstRowValues.Length - 1] + ")\n";
-                    commandStart += "VALUES\n";
+                    commandStart += "\"" + firstRowValues[firstRowValues.Length - 1] + ")\n";
+                    commandStart += "VALUES\n\t";
 
                     // values of 1 row
                     string[] row = parser.Read();
 
                     while (row != null)
                     {
-                        //TODO: ADD INSERT INTO SQL COMMAND TO variable script which will be returned
-
-                        // INSERT INTO table(column1, column2, …)
-                        // VALUES
-                        // (value1, value2, …);
-
                         string command = commandStart + "(";
 
                         for (int i = 0; i < row.Length - 1; i++)
                         {
-                            command += row[i] + ", ";
+                            command += "\"" + row[i] + "\", ";
                         }
 
-                        command += row[row.Length - 1] + ")\n;";
+                        command += "\"" + row[row.Length - 1] + "\");\n";
 
                         script += command;
 

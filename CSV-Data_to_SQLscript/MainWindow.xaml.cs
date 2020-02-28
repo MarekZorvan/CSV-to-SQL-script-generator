@@ -35,13 +35,13 @@ namespace CSV_Data_to_SQLscript
         {
             SaveFileDialog dialog = new SaveFileDialog()
             {
-                Filter = "Text Files(*.csv)|*"
+                Filter = "sql files (*.sql)|*.sql|All files (*.*)|*.*"
             };
 
             if (dialog.ShowDialog() == true)
             {
                 Generator scriptGen = new Generator(); 
-                string fileData = scriptGen.MakeScript(this.PathLabel.Content.ToString());
+                string fileData = scriptGen.MakeScript(this.PathLabel.Content.ToString(), this.TableNameTextBox.Text);
                 File.WriteAllText(dialog.FileName, fileData, Encoding.UTF8);
             }
         }
@@ -50,20 +50,14 @@ namespace CSV_Data_to_SQLscript
         {
             OpenFileDialog dialog = new OpenFileDialog()
             {
-                // Filter = "Text Files(*.csv)|*"
                 Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*"
             };
 
             if (dialog.ShowDialog() == true)
             {
-                this.PathLabel.Content = File.ReadAllText(dialog.FileName);
+                this.PathLabel.Content = dialog.FileName;
                 this.CreateScriptButton.IsEnabled = true;
             }
         }
-
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //}
     }
 }
