@@ -24,11 +24,13 @@ namespace ScriptGenerator
                 // column names from headers, are expected to be in the 1st row of CSV file
                 string[] firstRowValues;
 
+
                 using (var file = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-                    var reader = new StreamReader(file);
+                    var reader = new StreamReader(file, System.Text.Encoding.UTF8);
 
                     var parser = new CsvParser(reader);
+                    parser.Configuration.Encoding = System.Text.Encoding.UTF8;
                     //parser.Configuration.Delimiter = ",";
 
                     // save headers
@@ -38,10 +40,10 @@ namespace ScriptGenerator
 
                     for (int i = 0; i < firstRowValues.Length - 1; i++)
                     {
-                        commandStart += firstRowValues[i] + ", ";
+                        commandStart += "\"" + firstRowValues[i] + "\"" + ", ";
                     }
 
-                    commandStart += "\"" + firstRowValues[firstRowValues.Length - 1] + ")\n";
+                    commandStart += "\"" + firstRowValues[firstRowValues.Length - 1] + "\")\n";
                     commandStart += "VALUES\n\t";
 
                     // values of 1 row
@@ -51,12 +53,33 @@ namespace ScriptGenerator
                     {
                         string command = commandStart + "(";
 
-                        for (int i = 0; i < row.Length - 1; i++)
+                        for (int i = 0; i < firstRowValues.Length; i++)
                         {
-                            command += "\"" + row[i] + "\", ";
+                            if (firstRowValues[i] == "createdAt" || firstRowValues[i] == "updatedAt")
+                            {
+                                command += "now(), ";
+                            }
+                            else
+                            {
+
+                                // fix apostrophe in string for SQL command
+                                string fixedRow = "";
+                                foreach (var ch in row[i])
+                                {
+                                    fixedRow += ch;
+                                    if (ch == '\'')
+                                    {
+                                        fixedRow += "'";
+                                    }
+                                }
+                                command += "'" + fixedRow + "', ";
+                            }
                         }
 
-                        command += "\"" + row[row.Length - 1] + "\");\n";
+                        command = command.Remove(command.Length - 2);
+
+                        command += ");\n";
+
 
                         script += command;
 

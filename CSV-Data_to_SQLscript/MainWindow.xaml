@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="CSV to SQL script generator" Height="172" Width="534" ResizeMode="NoResize">
     <Grid Background="#FF25272C" Height="162">
-        <Button x:Name="CreateScriptButton" Content="Create SQL script" HorizontalAlignment="Left" Margin="10,94,0,41" Width="132" Background="#FFABD4F5" Click="CreateScriptButton_Click"/>
+        <Button x:Name="CreateScriptButton" Content="Save SQL script as" HorizontalAlignment="Left" Margin="10,94,0,41" Width="132" Background="#FFABD4F5" Click="CreateScriptButton_Click"/>
         <Label x:Name="PathLabel" Content="File path" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Width="459"/>
         <Button x:Name="SelectPathButton" Content="..." Margin="469,10,10,126" Click="SelectPathButton_Click"/>
         <TextBox x:Name="TableNameTextBox" HorizontalAlignment="Left" Margin="88,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329"/>
